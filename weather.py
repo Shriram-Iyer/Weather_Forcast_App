@@ -18,9 +18,9 @@ if place:
     st.subheader(f"{display} till next {text} in {place_t}")
     try:
         filter_data = get_data(place_t, days)
+        dates = [item["dt_txt"] for item in filter_data]
         if display == "Temperature":
             temp = []
-            dates = [item["dt_txt"] for item in filter_data]
             if degree == "Celsius (°C)":
                 temp = [float(tem["main"]["temp"]) / 10 for tem in filter_data]
             elif degree == "Fahrenheit (°F)":
@@ -33,7 +33,7 @@ if place:
         elif display == "Weather":
             weather_img = [weather["weather"][0]["main"] for weather in filter_data]
             weather_img = [f"images/{weather}.png" for weather in weather_img]
-            st.image(weather_img, width=115)
+            st.image(weather_img, width=115,caption=dates)
     except KeyError:
         st.info("""You have entered non-existent place!
         Please enter correct place.
